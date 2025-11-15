@@ -1,20 +1,45 @@
-<!-- Include A-Frame + AR.js -->
-<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
-
 <a-scene
   embedded
   renderer="logarithmicDepthBuffer: true; alpha: true;"
   arjs="sourceType: webcam; debugUIEnabled: false;"
 >
+  <!-- Marker with ID -->
   <a-marker
     type="pattern"
     url="../markers/marker.patt"
-    emitevents="true"
     id="marker"
+    emitevents="true"
   >
-    <!-- Empty marker for now, we’ll spawn the model nearby in next chunk -->
+    <!-- Empty for now — we'll spawn the model dynamically -->
   </a-marker>
 
   <a-entity camera></a-entity>
 </a-scene>
+
+<script>
+  // Wait for A-Frame to be ready
+  AFRAME.registerComponent('spawn-on-marker', {
+    init: function () {
+      const marker = document.querySelector('#marker');
+      let modelSpawned = false;
+
+      marker.addEventListener('markerFound', () => {
+        if (modelSpawned) return;
+        modelSpawned = true;
+
+        // Create the model entity
+        const model = document.createElement('a-entity');
+        model.setAttribute('gltf-model', '../assets/avocado2.glb');
+        model.setAttribute('position', '0 0 -1'); // 1m in front of the marker
+        model.setAttribute('scale', '0.01 0.01 0.01');
+        model.setAttribute('rotation', '0 0 0');
+
+        // Add to the marker
+        marker.appendChild(model);
+      });
+    }
+  });
+
+  // Attach the component to the scene
+  document.querySelector('a-scene').setAttribute('spawn-on-marker', '');
+</script>
