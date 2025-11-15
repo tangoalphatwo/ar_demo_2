@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View in AR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      padding: 20px 40px;
+      margin: 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      background-color: black;
+      color: white;
+      cursor: pointer;
+    }
+
+    #arContainer {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="startAR('ios')">View in AR (iPhone)</button>
+  <button onclick="startAR('android')">View in AR (Android)</button>
+
+  <div id="arContainer"></div>
+
+  <script src="js/ar-loader.js"></script>
+</body>
+</html>
