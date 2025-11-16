@@ -3,7 +3,12 @@
   renderer="logarithmicDepthBuffer: true; alpha: true;"
   arjs="sourceType: webcam; debugUIEnabled: false;"
 >
-  <a-marker preset="hiro">
+  <a-marker
+    type="pattern"
+    url="markers/marker.patt"
+    emitevents="true"
+    id="marker"
+  >
 
     <!-- model will be injected here -->
   </a-marker>
