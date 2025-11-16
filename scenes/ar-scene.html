@@ -1,45 +1,46 @@
-s<a-scene
+<a-scene
   embedded
   renderer="logarithmicDepthBuffer: true; alpha: true;"
   arjs="sourceType: webcam; debugUIEnabled: false;"
 >
-  <!-- Marker with ID -->
   <a-marker
+    id="marker"
     type="pattern"
     url="../markers/marker.patt"
-    id="marker"
     emitevents="true"
   >
-    <!-- Empty for now — we'll spawn the model dynamically -->
+    <!-- model will be injected here -->
   </a-marker>
 
   <a-entity camera></a-entity>
 </a-scene>
 
 <script>
-  // Wait for A-Frame to be ready
-  AFRAME.registerComponent('spawn-on-marker', {
-    init: function () {
-      const marker = document.querySelector('#marker');
-      let modelSpawned = false;
+  window.addEventListener("DOMContentLoaded", () => {
+    const marker = document.querySelector("#marker");
+    let modelSpawned = false;
 
-      marker.addEventListener('markerFound', () => {
-        if (modelSpawned) return;
-        modelSpawned = true;
+    marker.addEventListener("markerFound", () => {
+      if (modelSpawned) return;
+      modelSpawned = true;
 
-        // Create the model entity
-        const model = document.createElement('a-entity');
-        model.setAttribute('gltf-model', '../models/avocado2.glb');
-        model.setAttribute('position', '0 0 -.3'); // .3m in front of the marker
-        model.setAttribute('scale', '0.01 0.01 0.01');
-        model.setAttribute('rotation', '0 0 0');
+      // Create model entity
+      const model = document.createElement("a-entity");
+      model.setAttribute("gltf-model", "../assets/Avocado.glb");
+      model.setAttribute("scale", "0.5 0.5 0.5");
 
-        // Add to the marker
-        marker.appendChild(model);
-      });
-    }
+      // Set position slightly in front of vertical marker
+      model.setAttribute("position", "0 0 -1"); // 1 meter in front of marker
+      model.setAttribute("rotation", "0 0 0");
+
+      marker.appendChild(model);
+    });
+
+    // Optional: remove model when marker is lost
+    marker.addEventListener("markerLost", () => {
+      modelSpawned = false;
+      const oldModel = marker.querySelector("a-entity[gltf-model]");
+      if (oldModel) marker.removeChild(oldModel);
+    });
   });
-
-  // Attach the component to the scene
-  document.querySelector('a-scene').setAttribute('spawn-on-marker', '');
 </script>
