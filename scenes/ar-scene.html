@@ -26,11 +26,11 @@
 
       // Create model entity
       const model = document.createElement("a-entity");
-      model.setAttribute("gltf-model", "../assets/avocado2.glb");
+      model.setAttribute("gltf-model", "../models/avocado2.glb");
       model.setAttribute("scale", "0.5 0.5 0.5");
 
       // Set position slightly in front of vertical marker
-      model.setAttribute("position", "0 0 -1"); // 1 meter in front of marker
+      model.setAttribute("position", "0 0 -.3"); // 1 meter in front of marker
       model.setAttribute("rotation", "0 0 0");
 
       marker.appendChild(model);
