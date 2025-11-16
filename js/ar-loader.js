@@ -1,4 +1,5 @@
 function startAR(platform) {
+  
   // Hide UI and prepare for AR
   document.body.style.background = "transparent";
   document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
