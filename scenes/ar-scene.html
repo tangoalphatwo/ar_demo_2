@@ -21,6 +21,8 @@
     let modelSpawned = false;
 
     marker.addEventListener("markerFound", () => {
+      console.log("Marker Found!");
+
       if (modelSpawned) return;
       modelSpawned = true;
 
