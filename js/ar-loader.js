@@ -6,7 +6,7 @@ function startAR(platform) {
   container.style.display = "block";
 
   // Load the AR scene HTML into the container
-  fetch("scenes/ar-scene.html")
+  fetch("/ar_demo_2/scenes/ar-scene.html")
     .then(res => res.text())
     .then(html => {
       container.innerHTML = html;
