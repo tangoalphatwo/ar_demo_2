@@ -7,12 +7,16 @@ function startAR(platform) {
 
   // Load the AR scene HTML into the container
   fetch("/ar_demo_2/scenes/ar-scene.html")
-    .then(res => res.text())
-    .then(html => {
-      container.innerHTML = html;
-      console.log(`AR scene loaded for ${platform}`);
-    })
-    .catch(err => {
-      console.error("Failed to load AR scene:", err);
-    });
+  .then(response => {
+    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
+    return response.text();
+  })
+  .then(html => {
+    console.log("Scene HTML loaded!");
+    document.getElementById("scene-container").innerHTML = html;
+  })
+  .catch(error => {
+    console.error("Scene load error:", error);
+  });
+
 }
