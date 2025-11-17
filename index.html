@@ -29,23 +29,41 @@
     </a-scene>
 
     <script>
-      window.addEventListener("DOMContentLoaded", () => {
-        const marker = document.querySelector("#marker");
-        if (!marker) {
-          console.error("❌ Marker element not found!");
-          return;
-        }
+  window.addEventListener("DOMContentLoaded", () => {
+    const marker = document.querySelector("#marker");
+    if (!marker) {
+      console.error("Marker element not found!");
+      return;
+    }
 
-        console.log("✅ Marker element loaded and ready");
+    let modelSpawned = false;
 
-        marker.addEventListener("markerFound", () => {
-          console.log("🎯 markerFound fired");
-        });
+    marker.addEventListener("markerFound", () => {
+      console.log("markerFound fired");
 
-        marker.addEventListener("markerLost", () => {
-          console.log("🔴 markerLost fired");
-        });
-      });
-    </script>
+      if (modelSpawned) return;
+
+      // Create the 3D model
+      const model = document.createElement("a-entity");
+      model.setAttribute("gltf-model", "avocado.glb"); // Make sure file is in same folder
+      model.setAttribute("scale", "0.5 0.5 0.5");
+      model.setAttribute("position", "0 0 0"); // At marker origin
+      model.setAttribute("rotation", "0 0 0");
+
+      marker.appendChild(model);
+      modelSpawned = true;
+    });
+
+    marker.addEventListener("markerLost", () => {
+      console.log("markerLost fired");
+
+      const existingModel = marker.querySelector("a-entity[gltf-model]");
+      if (existingModel) {
+        marker.removeChild(existingModel);
+        modelSpawned = false;
+      }
+    });
+  });
+</script>
   </body>
 </html>
