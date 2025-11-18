@@ -1,69 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <title>AR.js Minimal</title>
+    <title>AR Demo</title>
+    <script defer src="ar-loader.js"></script>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
     <style>
-      body {
+      body, html {
         margin: 0;
+        padding: 0;
         overflow: hidden;
+        background: white;
+        font-family: sans-serif;
+      }
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      button {
+        padding: 1em 2em;
+        font-size: 1.2em;
+        margin: 1em;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <a-scene
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: true;"
-      renderer="logarithmicDepthBuffer: true;"
-    >
-      <a-marker
-        type="pattern"
-        url="markers/marker.patt"
-        emitevents="true"
-        id="marker"
-      ></a-marker>
-
-      <a-entity camera></a-entity>
-    </a-scene>
-
-    <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const marker = document.querySelector("#marker");
-    if (!marker) {
-      console.error("Marker element not found!");
-      return;
-    }
-
-    let modelSpawned = false;
-
-    marker.addEventListener("markerFound", () => {
-      console.log("markerFound fired");
-
-      if (modelSpawned) return;
-
-      // Create the 3D model
-      const model = document.createElement("a-entity");
-      model.setAttribute("gltf-model", "models/Avocado2.glb"); // Make sure file is in same folder
-      model.setAttribute("scale", "0.025 0.025 0.025");
-      model.setAttribute("position", "0 0 0"); // At marker origin
-      model.setAttribute("rotation", "0 0 0");
-
-      marker.appendChild(model);
-      modelSpawned = true;
-    });
-
-    marker.addEventListener("markerLost", () => {
-      console.log("markerLost fired");
-
-      const existingModel = marker.querySelector("a-entity[gltf-model]");
-      if (existingModel) {
-        marker.removeChild(existingModel);
-        modelSpawned = false;
-      }
-    });
-  });
-</script>
+    <div class="button-container">
+      <button id="ios">View in AR (iPhone)</button>
+      <button id="android">View in AR (Android)</button>
+    </div>
   </body>
 </html>
