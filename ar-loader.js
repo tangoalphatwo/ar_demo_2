@@ -1,19 +1,14 @@
-function startAR(platform) {
-  
-  // Hide UI and prepare for AR
-  document.body.style.background = "transparent";
-  document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
-  const container = document.getElementById("arContainer");
-  container.style.display = "block";
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("ios").addEventListener("click", () => loadAR("ios"));
+  document.getElementById("android").addEventListener("click", () => loadAR("android"));
+});
 
-  // Load the AR scene HTML into the container
-  fetch("ar-scene.html")
+function loadAR(deviceType) {
+  fetch("scenes/ar-scene.html")
     .then(res => res.text())
     .then(html => {
-      container.innerHTML = html;
-      console.log(`AR scene loaded for ${platform}`);
+      document.body.innerHTML = html;
+      console.log(`AR scene loaded for ${deviceType}`);
     })
-    .catch(err => {
-      console.error("Failed to load AR scene:", err);
-    });
+    .catch(err => console.error("Failed to load AR scene:", err));
 }
