@@ -1,47 +1,47 @@
+<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+
 <a-scene
   embedded
   renderer="logarithmicDepthBuffer: true; alpha: true;"
   arjs="sourceType: webcam; debugUIEnabled: false;"
 >
   <a-marker
+    id="marker"
     type="pattern"
     url="markers/marker.patt"
     emitevents="true"
-    id="marker"
   >
-
-    <!-- model will be injected here -->
+    <!-- Model will be added via JS -->
   </a-marker>
 
   <a-entity camera></a-entity>
 </a-scene>
 
 <script>
-  console.log("ar-scene file run.");
-  
   window.addEventListener("DOMContentLoaded", () => {
-  const marker = document.querySelector("#marker");
-  if (!marker) {
-    console.error("Marker element not found!");
-    return;
-  }
+    const marker = document.querySelector("#marker");
+    let modelSpawned = false;
 
-  console.log("Marker element found.");
+    marker.addEventListener("markerFound", () => {
+      if (modelSpawned) return;
+      modelSpawned = true;
 
-  marker.addEventListener("markerFound", () => {
-    console.log("Marker FOUND!");
+      console.log("Marker found! Spawning avocado...");
 
-    const model = document.createElement("a-entity");
-    model.setAttribute("gltf-model", "models/Avocado2.glb");
-    model.setAttribute("scale", "0.025 0.025 0.025");
-    model.setAttribute("position", "0 0 0");
+      const model = document.createElement("a-entity");
+      model.setAttribute("gltf-model", "models/Avocado2.glb");
+      model.setAttribute("scale", "0.01 0.01 0.01");
+      model.setAttribute("position", "0 0 0");
+      model.setAttribute("rotation", "0 0 0");
 
-    marker.appendChild(model);
+      marker.appendChild(model);
+    });
+
+    marker.addEventListener("markerLost", () => {
+      modelSpawned = false;
+      const oldModel = marker.querySelector("a-entity[gltf-model]");
+      if (oldModel) marker.removeChild(oldModel);
+    });
   });
-
-  marker.addEventListener("markerLost", () => {
-    console.log("Marker LOST!");
-  });
-});
-
 </script>
