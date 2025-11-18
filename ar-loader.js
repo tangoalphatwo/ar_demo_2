@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadAR(deviceType) {
-  fetch("scenes/ar-scene.html")
+  fetch("ar-scene.html")
     .then(res => res.text())
     .then(html => {
       // Remove all children of body to clear white background
