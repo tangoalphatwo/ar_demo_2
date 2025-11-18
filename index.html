@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>AR Demo</title>
-    <script defer src="ar-loader.js"></script>
     <style>
       body, html {
         margin: 0;
@@ -28,8 +27,10 @@
   </head>
   <body>
     <div class="button-container">
-      <button id="ios">View in AR (iPhone)</button>
-      <button id="android">View in AR (Android)</button>
+      <!-- View in AR (iPhone) -->
+      <button onclick="location.href='scenes/ar-scene.html'">View in AR (iPhone)</button>
+      <!-- View in AR (Android) -->
+      <button onclick="location.href='scenes/ar-scene.html'">View in AR (Android)</button>
     </div>
   </body>
 </html>
